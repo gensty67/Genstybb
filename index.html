@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blade Ball Stats Leaderboard</title>
+    <style>
+        :root {
+            --bg-color: #0a0d1a;
+            --text-color: #f1f5f9;
+            --accent-color: #ff2a5f;
+            --accent-glow: rgba(255, 42, 95, 0.4);
+            --card-bg: #11162d;
+            --border-color: #1e264f;
+            --stat-blue: #0099ff;
+        }
+
+        @keyframes smoothIntro {
+            0% { opacity: 0; transform: translateY(30px); filter: blur(5px); }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 15px rgba(255, 42, 95, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(255, 42, 95, 0.6); }
+            100% { box-shadow: 0 0 15px rgba(255, 42, 95, 0.3); }
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            padding: 30px 20px;
+            box-sizing: border-box;
+            animation: smoothIntro 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .region-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 153, 255, 0.15);
+            border: 1px solid var(--stat-blue);
+            color: #7dd3fc;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #fff, #ff2a5f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .last-seen-badge {
+            display: inline-block;
+            background: #334155;
+            color: #cbd5e1;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .stats-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, var(--card-bg), #171e3d);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            border-color: var(--accent-color);
+            transform: scale(1.03);
+        }
+
+        .stat-box.wins:hover { animation: pulseGlow 1.5s infinite; }
+
+        .stat-box h2 {
+            margin: 0;
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .stat-box.wins h2 { color: var(--accent-color); text-shadow: 0 0 15px var(--accent-glow); }
+        .stat-box.kills h2 { color: #00ffcc; text-shadow: 0 0 15px rgba(0, 255, 204, 0.3); }
+
+        .stat-box p {
+            margin: 10px 0 0 0;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+        }
+
+        .table-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .table-section h3 {
+            margin-top: 0;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            color: #94a3b8;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .stats-table tr {
+            border-bottom: 1px solid rgba(30, 38, 79, 0.5);
+            transition: background 0.2s;
+        }
+
+        .stats-table tr:last-child { border: none; }
+        .stats-table tr:hover { background: rgba(255, 42, 95, 0.03); }
+
+        .stats-table td {
+            padding: 15px 10px;
+            font-size: 1.05rem;
+        }
+
+        .stats-table td.label {
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .stats-table td.value {
+            text-align: right;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        .highlight {
+            color: var(--accent-color) !important;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 35px;
+            font-size: 0.85rem;
+            color: #475569;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="region-badge">
+                <span>🇪🇪</span> Region: Estonia
+            </div>
+            <h1>YOUR_NAME</h1>
+            <div class="last-seen-badge">Last seen: 12 hours ago</div>
+        </header>
+
+        <main>
+            <div class="stats-hero">
+                <div class="stat-box wins">
+                    <h2>7,000+</h2>
+                    <p>Wins ⚔️</p>
+                </div>
+                <div class="stat-box kills">
+                    <h2>38,000+</h2>
+                    <p>Kills 💀</p>
+                </div>
+            </div>
+
+            <div class="table-section">
+                <h3>Player Information</h3>
+                <table class="stats-table">
+                    <tr>
+                        <td class="label">Main Game</td>
+                        <td class="value">Blade Ball (Roblox)</td>
+                    </tr>
+                    <tr>
+                        <td class="label">K/W Ratio (Est.)</td>
+                        <td class="value highlight">5.43 K/W</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Playstyle</td>
+                        <td class="value">Aggressive / Curve Master</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Combat Type</td>
+                        <td class="value">Long Range & Clashes</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Status Tier</td>
+                        <td class="value" style="color: #eab308;">God Tier / Elite Grinder</td>
+                    </tr>
+                </table>
+            </div>
+        </main>
+
+        <footer>
+            <p>Blade Ball Estonia Leaderboard Fanpage</p>
+        </footer>
+    </div>
+
+</body>
+</html>
